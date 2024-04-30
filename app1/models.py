@@ -16,6 +16,10 @@ class Student(BaseModel):
     age = models.IntegerField(default=20)
     birthday = models.DateField(default='2024-04-30')
     ismarired = models.BooleanField(default=False)
+    height = models.IntegerField(default=180)
+    weight = models.IntegerField(default=180)
+    sex= models.CharField(max_length=10,default='men')
+    class_name = models.CharField(max_length=20,default='class1')
 
     class Meta:
         db_table = 'student'

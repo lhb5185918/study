@@ -33,5 +33,7 @@ urlpatterns = [
     path('time1/',v1.time1),
     path('addstu/',v1.add_stu),
     path('selectall/',v1.selectall),
+    re_path(r'delete_stu/(\d+)',v1.delete_stu),
+    path('select2/', v1.select2),
 
 ]

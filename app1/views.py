@@ -5,7 +5,7 @@ import time
 from django.views.decorators.csrf import csrf_exempt
 from app1.models import Student
 import json
-
+from django.db.models import F,Q,Avg,Count,Max,Min,Sum
 
 @csrf_exempt
 # Create your views here.
@@ -53,4 +53,23 @@ def selectall(request):
     # print(s3.name)
 
 
-    return HttpResponse('selectall')
+@csrf_exempt
+def delete_stu(reuqest,del_id):
+    # Student.objects.filter(id = del_id).delete()
+    try:
+        Student.objects.get(id = del_id).delete()
+    except :
+        return HttpResponse('删除失败')
+
+    return HttpResponse('删除成功')
+
+
+@csrf_exempt
+def select2(request):
+    # result = Student.objects.filter(age__gt =21).values("name")
+    # result = Student.objects.filter(birthday__day=2).values("name")
+    # result = Student.objects.filter(height__gt=F("weight")).values("name")
+    # result = Student.objects.filter(Q(height__gt=170)&Q(age__gt=20)).values("name")
+    # result = Student.objects.all().aggregate(Max("age"))
+    result  = Student.objects.all().values("class_name").annotate(Max("height"))
+    return HttpResponse(json.dumps(list(result)))
